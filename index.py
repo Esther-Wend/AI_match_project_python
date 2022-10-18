@@ -143,17 +143,12 @@ def render_page_content(pathname):
     
     dcc.Graph(
      
-       figure=income()
+       figure=age()
    ),
 
    dcc.Graph(
 
-    figure = activite()
-   ),
-
-   dcc.Graph(
-
-    figure = age()
+    figure = match_genre()
    ),
 
    dcc.Graph(
@@ -163,13 +158,19 @@ def render_page_content(pathname):
 
    dcc.Graph(
 
-    figure = match_genre()
+    figure = activite()
+   ),
+
+   dcc.Graph(
+
+    figure = income()
    )
 ])]
 
  
     elif pathname == '/Profiles':
         return [html.Div(children=[
+                html.H1(children='Profils types des participants', style={'text-align':'center', 'font-size':'40px','font-family':'nunito'}),
                 html.Div(children=[
                     html.Img(src='assets/profil.png', style={'position':'relative', 'top':'200px', 'height':'100px'}),
                     html.H1(children='27 ans', style={'position':'relative','left':'150px','top':'100px', 'font-size':'25px'}),
