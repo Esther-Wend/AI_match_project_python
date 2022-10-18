@@ -12,7 +12,7 @@
 ## Deuxième partie : Application
 ### L'objectif du tableau de bord est de permettre à l'utilisateur d'interagir sur les données, de pouvoir voir le profil des utilisateurs et d'utiliser le modèle prédictif. L'application est basée sur 4 script: l'app.py , le data.py , l'index.py et le layout.py. L' application comporte un menu accueil qui presente l'objectif du projet et l'entreprise AI match, un menu analyse où se trouve les différentes graphiques interactives interessantes, un menu  profil des participants. 
 ### Fonctionnalité en cours de développement
-#### Le dernier menu est Machine Learning Analysis qui devait contenir la prédiction.
+## Le dernier menu est Machine Learning Analysis qui devait contenir la prédiction.
 
 ### Le lien de l'application 
 <a href="https://aimatch69.herokuapp.com/" target="_blank">Dashboard hébergé sur Heroku</a>
