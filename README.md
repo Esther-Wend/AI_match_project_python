@@ -6,7 +6,7 @@
 ### Ce projet comporte deux grandes parties: la partie prédiction et la partie data visualisation.
 ## Première partie: Prédiction
 ###  La prédiction se trouve dans le fichier prediction.py.
-###  Tout d'abord nous avons nettoyer la base de données avec la méthode les K plus proches voisins pour les variables quantitatives et par le mode pour les variables quantitatives. Nous avons appliqué l'arbre de decision pour recuperer les variables importantes à mettre dans le modèle.
+###  Tout d'abord nous avons nettoyer la base de données avec la méthode les K plus proches voisins pour les variables quantitatives et par le mode pour les variables quantitatives. Nous avons appliqué l'arbre de decision pour recuperer les variables importantes à mettre dans le modèle. Les données étant des données déséquilibrées nous avons appliquons smote d'une part et d'autre part Sborderline Smote. Nous appliquons plusieurs modèles  soit sur  les données déséquilibrées soit sur les données équilibrées. Pour chaque modèle il y a la partie application du modèle sur les données d'apprentissage, ensuite la prédiction sur les données test et l'évaluation du modèle avec comme critère le F1_score.
 
 
 
