@@ -90,9 +90,13 @@ def age():
 
 def goout():
   df = pd.read_csv("train.csv",sep=";")
+  code_go = np.arange(1,8,1)
+  label =["Plusieurs fois/semaine","Deux fois/semaines","Une fois/semaine","Deux fois/mois","Une fois/mois","Plusieurs fois/an","Presque jamais"]
+  df['go_out'] = df['go_out'].replace(code_go, label)
   fig_goout = px.histogram(df, x="go_out",title='Répartition des fréquences (go_out) de participation', labels={'1':'Plusieurs fois/semaine', '2':'Deux fois/semaine','3':'Une fois/semaine','4':'Deux fois/mois','5':'Une fois/mois','6':'Quelques fois/année', '7':'Presque jamais'})
   fig_goout.update_layout({'plot_bgcolor':'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)'})
   fig_goout.update_layout(title={'text':'Répartiton des fréquences (go_out) de participation', 'y':0.9, 'x':0.5, 'xanchor':'center','yanchor':'top'})
+  fig_goout.update_xaxes(title='')
   return fig_goout
 
 def match_genre():
