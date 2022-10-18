@@ -14,7 +14,8 @@
 
 
 ## Fonctionnalité en cours de développement
-## Le dernier menu est Machine Learning Analysis qui devait contenir la prédiction.
+### Le dernier menu est Machine Learning Analysis qui devait contenir la prédiction.
 
-### Le lien de l'application 
+
+## Le lien de l'application 
 <a href="https://aimatch69.herokuapp.com/" target="_blank">Dashboard hébergé sur Heroku</a>
