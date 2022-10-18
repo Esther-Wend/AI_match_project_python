@@ -6,8 +6,8 @@
 
 ### Ce projet comporte deux grandes parties: la partie prédiction et la partie data visualisation.
 ## Première partie: Prédiction
-#### La prédiction se trouve dans le fichier prediction.py.
-###  Tout d'abord nous avons nettoyer la base de données avec la méthode les K plus proches voisins pour les variables quantitatives et par le mode pour les variables quantitatives. Nous avons appliqué l'arbre de decision pour recuperer les variables importantes à mettre dans le modèle.
+# La prédiction se trouve dans le fichier prediction.py.
+# Tout d'abord nous avons nettoyer la base de données avec la méthode les K plus proches voisins pour les variables quantitatives et par le mode pour les variables quantitatives. Nous avons appliqué l'arbre de decision pour recuperer les variables importantes à mettre dans le modèle.
 
 
 
