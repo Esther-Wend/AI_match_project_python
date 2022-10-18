@@ -17,15 +17,15 @@ import plotly.express as px
 import dash_bootstrap_components as dbc
 import numpy as np
 # Import custom data.py
-from data import data_final
+from data import income, activite
 
 # Import data from data.py file
-df = data_final
-df.drop(['order','positin1','round','wave','dec_o','position'], axis=1, inplace=True)
+#df = data_final
+#df.drop(['order','positin1','round','wave','dec_o','position'], axis=1, inplace=True)
 
 
 ###################################################################### GRAPH #######################################################################################################
-
+'''
 #Graph: Répartion de l'age : Valeurs atypiques sur l’age
 fig = px.histogram(df, x="age",title='Répartion de l\'age')
 fig.update_layout(bargap=0.2)
@@ -41,8 +41,31 @@ fig4 = px.box(df, x="gender", y="age",color="match",
     notched=True , # used notched shape
     title="Repartition de l'age en fonction du sexe selon le profile match")
 fig4.update_layout({'plot_bgcolor':'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)'})
+'''
 
 
+
+# Layout for Analysis page
+def teamLayout() :
+    return( html.Div([
+    
+    ### Graphs of Historical  statistics ###
+    dbc.Row(dbc.Col(html.H3(children='Analysis'))),
+    
+    dcc.Graph(
+     
+       figure=income
+   ),
+     dcc.Graph(
+       
+        figure=activite
+    ),
+    
+    # Bar Chart of Wins and Losses
+
+],className='app-page'))
+
+'''
 
 # Graph: Popularités des activités
 def activite():
@@ -133,7 +156,8 @@ appMenu = html.Div([
 ],className='menu')
 
 # Layout for Analysis page
-teamLayout = html.Div([
+df teamLayout():
+    return html.Div([
     
     ### Graphs of Historical  statistics ###
     dbc.Row(dbc.Col(html.H3(children='Analysis'))),
@@ -162,6 +186,9 @@ teamLayout = html.Div([
     # Bar Chart of Wins and Losses
 
 ],className='app-page')
+
+
+
 
 image_homme = 'assets/profil.png'
 image_femme = 'assets/femelle.png'
@@ -197,3 +224,6 @@ profilLayout = html.Div(children=[
     # Bar Chart of Wins and Losses
 
 #],className='app-page')
+
+
+'''

@@ -19,7 +19,9 @@ import plotly.express as px
 #from layouts import profilLayout ,teamLayout
 
 # Import custom data.py
-from data import data_final
+from data import *
+
+from layouts import teamLayout
 
 
 # Import app
@@ -29,8 +31,6 @@ from app import srv as server
 # Import data from data.py file
 
 
-
-df = data_final
 
 # the style arguments for the sidebar. We use position:fixed and a fixed width
 SIDEBAR_STYLE = {
@@ -109,7 +109,7 @@ def render_page_content(pathname):
             informations sur elle et ses attentes. L’entreprise récolte ainsi les données et
             organise différentes vagues de speed dating.
             
-            Lors d’une session, un participant rencontre plusieurs personnes. A l’issue tr(jh,,,,)
+            Lors d’une session, un participant rencontre plusieurs personnes. A l’issue de
             chaque rencontre, il décide si Oui/Non la personne veut revoir un ou des
             coups de cœur.
             
@@ -136,9 +136,64 @@ def render_page_content(pathname):
         
         ]
     elif pathname == '/Analysis':
-        return teamLayout
+        return [html.Div([
+    
+    ### Graphs of Historical  statistics ###
+    dbc.Row(dbc.Col(html.H3(children='Analysis'))),
+    
+    dcc.Graph(
+     
+       figure=income()
+   ),
+
+   dcc.Graph(
+
+    figure = activite()
+   ),
+
+   dcc.Graph(
+
+    figure = age()
+   ),
+
+   dcc.Graph(
+
+    figure = goout()
+   ),
+
+   dcc.Graph(
+
+    figure = match_genre()
+   )
+])]
+
+ 
     elif pathname == '/Profiles':
-        return profilLayout
+        return [html.Div(children=[
+                html.Div(children=[
+                    html.Img(src='assets/profil.png', style={'position':'relative', 'top':'200px', 'height':'100px'}),
+                    html.H1(children='27 ans', style={'position':'relative','left':'150px','top':'100px', 'font-size':'25px'}),
+                    html.H1(children='Études de finance', style={'position':'relative','left':'150px','top':'105px','font-size':'25px'}),
+                    html.H1(children='Caucasien', style={'position':'relative','left':'150px','top':'110px','font-size':'25px'}),
+                    html.H1(children='Ingénieur', style={'position':'relative','left':'150px','top':'115px','font-size':'25px'}),
+                    html.H1(children='46 274$/mois', style={'position':'relative','left':'150px','top':'120px','font-size':'25px'}),
+                    html.H1(children='Aime le sport/les livres/les films/la musique', style={'position':'relative','left':'150px','top':'125px','font-size':'25px'}),
+                    html.H1(children='1 date/mois', style={'position':'relative','left':'150px','top':'130px','font-size':'25px'}),
+                    html.H1(children='2 sorties/semaine', style={'position':'relative','left':'150px','top':'135px','font-size':'25px'})
+                ], style={'float':'left', 'width':'40%'}),
+
+                html.Div(children=[
+                    html.Img(src='assets/femelle.png', style={'position':'relative', 'top':'200px', 'height':'100px'}),
+                    html.H1(children='26 ans', style={'position':'relative','left':'150px','top':'100px','font-size':'25px'}),
+                    html.H1(children='Études de finance', style={'position':'relative','left':'150px','top':'105px','font-size':'25px'}),
+                    html.H1(children='Sud-américain/Hispanique', style={'position':'relative','left':'150px','top':'110px','font-size':'25px'}),
+                    html.H1(children='Ingénieur', style={'position':'relative','left':'150px','top':'115px','font-size':'25px'}),
+                    html.H1(children='44 577$/mois', style={'position':'relative','left':'150px','top':'120px','font-size':'25px'}),
+                    html.H1(children='Aime les diners/les musées/les films/les arts', style={'position':'relative','left':'150px','top':'125px','font-size':'25px'}),
+                    html.H1(children='1 date/mois', style={'position':'relative','left':'150px','top':'130px','font-size':'25px'}),
+                    html.H1(children='2 sorties/semaine', style={'position':'relative','left':'150px','top':'135px','font-size':'25px'})
+                ], style={'float':'left','width':'40%'})
+                ], style={'position':'absolute', 'top':'10px','left':'290px', 'width':'90%'})]
 
         
 
