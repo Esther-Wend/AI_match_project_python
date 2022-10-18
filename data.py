@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Oct 17 12:39:23 2022
-
-@author: f_ati
-"""
-
-
 # Import Pandas
 import pandas as pd
 import numpy as np
@@ -16,7 +8,7 @@ from dash import html
 from dash import dcc
 import plotly.express as px
 
-
+font_family = 'nunito'
 
 
 
@@ -45,7 +37,7 @@ def activite():
 
   fig_activites.update_layout({'plot_bgcolor':'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)'},yaxis_range=[0,100])
 
-  fig_activites.update_layout(title={'text':'Popularités des activités', 'y':0.9, 'x':0.5, 'xanchor':'center','yanchor':'top'})
+  fig_activites.update_layout(title={'text':'Popularités des activités', 'y':0.92, 'x':0.5, 'xanchor':'center','yanchor':'top'}, title_font_family=font_family, title_font_size=28)
 
   return fig_activites
 
@@ -73,18 +65,18 @@ def income():
 
   fig_income.update_layout({'plot_bgcolor':'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)'})
 
-  fig_income.update_layout(title={'text':'Salaire médian par tranche d\'age et par sexe', 'y':0.9, 'x':0.5, 'xanchor':'center','yanchor':'top'}, 
-                      legend_title_text='Genre')
+  fig_income.update_layout(title={'text':'Salaire médian par tranche d\'age et par sexe', 'y':0.96, 'x':0.5, 'xanchor':'center','yanchor':'top'}, 
+                      legend_title_text='Genre', title_font_family=font_family, title_font_size=28)
 
   return fig_income
 
 
 def age():
   df = pd.read_csv("train.csv",sep=";")
-  fig_age = px.histogram(df, x="age",title='Répartion de l\'age')
+  fig_age = px.histogram(df, x="age",title="Répartion de l'âge")
   fig_age.update_layout(bargap=0.2)
   fig_age.update_layout({'plot_bgcolor':'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)'})
-  fig_age.update_layout(title={'text':'Répartition de l\âge', 'y':0.9, 'x':0.5, 'xanchor':'center','yanchor':'top'})
+  fig_age.update_layout(title={'text':"Répartition de l'âge", 'y':0.92, 'x':0.5, 'xanchor':'center','yanchor':'top'},title_font_family=font_family, title_font_size=28)
 
   return fig_age
 
@@ -95,18 +87,22 @@ def goout():
   df['go_out'] = df['go_out'].replace(code_go, label)
   fig_goout = px.histogram(df, x="go_out",title='Répartition des fréquences (go_out) de participation', labels={'1':'Plusieurs fois/semaine', '2':'Deux fois/semaine','3':'Une fois/semaine','4':'Deux fois/mois','5':'Une fois/mois','6':'Quelques fois/année', '7':'Presque jamais'})
   fig_goout.update_layout({'plot_bgcolor':'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)'})
-  fig_goout.update_layout(title={'text':'Répartiton des fréquences (go_out) de participation', 'y':0.9, 'x':0.5, 'xanchor':'center','yanchor':'top'})
+  fig_goout.update_layout(title={'text':'Répartiton des fréquences (go_out) de participation', 'y':0.92, 'x':0.5, 'xanchor':'center','yanchor':'top'},title_font_family=font_family, title_font_size=28)
   fig_goout.update_xaxes(title='')
   return fig_goout
 
 def match_genre():
   df = pd.read_csv("train.csv",sep=";")
+  df['gender'] = np.where(df['gender'] == 1, "Homme","Femme")
+
   fig_matchgenre = px.box(df, x="gender", y="age",color="match",
       notched=True , # used notched shape
-      title="Repartition de l'age en fonction du sexe selon le profile match")
+      title="Repartition de l'age en fonction du sexe selon le profile match",
+      )
   fig_matchgenre.update_layout({'plot_bgcolor':'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)'})
-  fig_matchgenre.update_layout(title={'text':'Répartition de l\'âge en fonction du sexe et selon le match', 'y':0.9, 'x':0.5, 'xanchor':'center','yanchor':'top'})
+  fig_matchgenre.update_layout(title={'text':'Répartition de l\'âge en fonction du sexe et selon le match', 'y':0.92, 'x':0.5, 'xanchor':'center','yanchor':'top'},title_font_family=font_family, title_font_size=28)
 
   return fig_matchgenre
+
 
 
