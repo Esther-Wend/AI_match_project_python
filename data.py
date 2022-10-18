@@ -90,7 +90,7 @@ def age():
 
 def goout():
   df = pd.read_csv("train.csv",sep=";")
-  fig_goout = px.histogram(df, x="go_out",title='Répartition des fréquences (go_out) de participation')
+  fig_goout = px.histogram(df, x="go_out",title='Répartition des fréquences (go_out) de participation', labels={'1':'Plusieurs fois/semaine', '2':'Deux fois/semaine','3':'Une fois/semaine','4':'Deux fois/mois','5':'Une fois/mois','6':'Quelques fois/année', '7':'Presque jamais'})
   fig_goout.update_layout({'plot_bgcolor':'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)'})
   fig_goout.update_layout(title={'text':'Répartiton des fréquences (go_out) de participation', 'y':0.9, 'x':0.5, 'xanchor':'center','yanchor':'top'})
   return fig_goout
