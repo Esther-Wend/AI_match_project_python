@@ -7,21 +7,22 @@ Created on Mon Oct 17 12:47:41 2022
 
 # import dash-core, dash-html, dash io, bootstrap
 from dash import html
-from dash import dcc
-from dash.dependencies import Input, Output
+from dash import dcc, dash_table
+from dash.dependencies import Input, Output, State
 
 from PIL import Image
 # Dash Bootstrap components
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
+import base64
+import io
 # Navbar, layouts, custom callbacks
 #from layouts import profilLayout ,teamLayout
 
 # Import custom data.py
 from data import *
 
-from layouts import teamLayout
 
 
 # Import app
@@ -63,11 +64,10 @@ sidebar = html.Div(
             pills=True,
         ),
         html.Hr(),
-        html.H2("Historical Analysis", className="lead"),
         dbc.Nav(
             [
-                dbc.NavLink("Analysis", href="/Analysis", active="exact"),
-                dbc.NavLink("Profiles of participants", href="/Profiles", active="exact")
+                dbc.NavLink("Analyse", href="/Analyse", active="exact"),
+                dbc.NavLink("Profiles types des participants", href="/Profiles", active="exact")
             ],
             vertical=True,
             pills=True,
@@ -77,8 +77,7 @@ sidebar = html.Div(
         dbc.Nav(
             [
                 dbc.NavLink("Projections and Regression", href="/projection", active="exact"),
-                # dbc.NavLink("Batting Analysis", href="/player", active="exact"),
-                # dbc.NavLink("Pitching/Feilding Analysis", href="/field", active="exact"),
+                dbc.NavLink("Tester vos données !", href='/tester', active='exact')
             ],
             vertical=True,
             pills=True,
@@ -135,11 +134,11 @@ def render_page_content(pathname):
         
         
         ]
-    elif pathname == '/Analysis':
+    elif pathname == '/Analyse':
         return [html.Div([
     
     ### Graphs of Historical  statistics ###
-    dbc.Row(dbc.Col(html.H3(children='Analysis'))),
+    dbc.Row(dbc.Col(html.H3(children='Analyse', style={'text-align':'center', 'font-size':'100px','font-family':'nunito','background-color':'red', 'background-image':'conic-gradient(#f3ec78, #af4261)', 'background-size':'100%','background-repeat':'repeat','-webkit-background-clip':'text','-webkit-text-fill-color':'transparent','-moz-background-clip':'text', '-moz-text-fill-color':'transparent', 'font-weight':'900'}))),
     
     dcc.Graph(
      
@@ -170,7 +169,7 @@ def render_page_content(pathname):
  
     elif pathname == '/Profiles':
         return [html.Div(children=[
-                html.H1(children='Profils types des participants', style={'text-align':'center', 'font-size':'40px','font-family':'nunito'}),
+                html.H1(children='Profils types des participants', style={'text-align':'center', 'font-size':'100px','font-family':'nunito','background-color':'red', 'background-image':'conic-gradient(#f3ec78, #af4261)', 'background-size':'100%','background-repeat':'repeat','-webkit-background-clip':'text','-webkit-text-fill-color':'transparent','-moz-background-clip':'text', '-moz-text-fill-color':'transparent', 'font-weight':'900'}),
                 html.Div(children=[
                     html.Img(src='assets/profil.png', style={'position':'relative', 'top':'200px', 'height':'100px'}),
                     html.H1(children='27 ans', style={'position':'relative','left':'150px','top':'100px', 'font-size':'25px'}),
@@ -196,6 +195,31 @@ def render_page_content(pathname):
                 ], style={'float':'left','width':'40%'})
                 ], style={'position':'absolute', 'top':'10px','left':'290px', 'width':'90%'})]
 
+    elif pathname == '/tester':
+        return [html.Div([
+    dcc.Upload(
+        id='upload-data',
+        children=html.Div([
+            'Drag and Drop or ',
+            html.A('Select Files')
+        ]),
+        style={
+            'width': '100%',
+            'height': '60px',
+            'lineHeight': '60px',
+            'borderWidth': '1px',
+            'borderStyle': 'dashed',
+            'borderRadius': '5px',
+            'textAlign': 'center',
+            'margin': '10px'
+        },
+        # Allow multiple files to be uploaded
+        multiple=True
+    ),
+    html.Div(id='output-data-upload'),
+])]
+
+
         
 
     else:
@@ -207,6 +231,54 @@ def render_page_content(pathname):
                 html.P(f"The pathname {pathname} was not recognised..."),
             ]
         )
+
+
+def parse_contents(contents, filename, date):
+    content_type, content_string = contents.split(',')
+
+    decoded = base64.b64decode(content_string)
+    try:
+        if 'csv' in filename:
+            df = pd.read_csv(
+                io.StringIO(decoded.decode('utf-8')), sep=';', on_bad_lines='skip')
+    except Exception as e:
+        print(e)
+        return html.Div([
+            "Une erreur s'est produite."
+        ])
+
+    return html.Div([
+        html.H5(filename),
+
+        dash_table.DataTable(
+            df.to_dict('records'),
+            [{'name': x, 'id': x} for x in df.columns]
+        ),
+
+        html.Hr(),  # horizontal line
+
+        # For debugging, display the raw contents provided by the web browser
+        html.Div('Raw Content'),
+        html.Pre(contents[0:500] + '...', style={
+            'whiteSpace': 'pre-wrap',
+            'wordBreak': 'break-all'
+        })
+    ])
+
+@app.callback(Output('output-data-upload', 'children'),
+              Input('upload-data', 'contents'),
+              State('upload-data', 'filename'),
+              State('upload-data', 'last_modified'))
+def update_output(list_of_contents, list_of_names, list_of_dates):
+    if list_of_contents is not None:
+        children = [
+            parse_contents(c, n, d) for c, n, d in
+            zip(list_of_contents, list_of_names, list_of_dates)]
+        return children
+
+
+
+
 
 
 
