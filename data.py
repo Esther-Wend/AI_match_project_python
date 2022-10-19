@@ -98,7 +98,7 @@ def goout():
 def match_genre():
   df = pd.read_csv("train.csv",sep=";")
   df['gender'] = np.where(df['gender'] == 1, "Homme","Femme")
-  df['match'] = np.where(df['match'] == 1, "Match', 'Pas Mathc')
+  df['match'] = np.where(df['match'] == 1, 'Match', 'Pas Match')
 
   fig_matchgenre = px.box(df, x="gender", y="age",color="match",
       notched=True , # used notched shape
