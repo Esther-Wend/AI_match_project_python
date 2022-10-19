@@ -20,7 +20,7 @@
 
 ## Fonctionnalité en cours de développement
 ### Projection régression  qui devait contenir la prédiction.
-### Tester les données servira à déposer un fichier pour prédire si deux profil match ou pas.
+### Tester les données qui servira à déposer un fichier pour prédire si deux profil match ou pas.
 
 
 ## Le lien de l'application 
