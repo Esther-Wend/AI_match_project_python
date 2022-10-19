@@ -19,7 +19,8 @@
 
 
 ## Fonctionnalité en cours de développement
-### Le dernier menu est Machine Learning Analysis qui devait contenir la prédiction.
+### Projection régression  qui devait contenir la prédiction.
+### Tester les données servira à déposer un fichier pour prédire si deux profil match ou pas.
 
 
 ## Le lien de l'application 
