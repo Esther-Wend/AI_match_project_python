@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Oct 17 12:47:41 2022
 
-@author: f_ati
-"""
 
 # import dash-core, dash-html, dash io, bootstrap
 from dash import html
@@ -17,8 +13,7 @@ import pandas as pd
 import plotly.express as px
 import base64
 import io
-# Navbar, layouts, custom callbacks
-#from layouts import profilLayout ,teamLayout
+
 
 # Import custom data.py
 from data import *
@@ -29,7 +24,7 @@ from data import *
 from app import app
 # Import server for deployment
 from app import srv as server
-# Import data from data.py file
+
 
 
 
@@ -58,6 +53,7 @@ sidebar = html.Div(
         html.Img(src=logo1, height="200",width="230"),
         html.H2("Data Explorer", className="display-5"),
         html.Hr(),
+        #Initialisation de la barre laterale pour la navigation
         dbc.Nav(
             [dbc.NavLink("Home", href="/", active="exact")],
             vertical=True,
@@ -93,7 +89,9 @@ app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
 logo=Image.open("assets/logo.png")
 
+#Fonction callback pour le fonctionnement de la barre laterale
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+
 def render_page_content(pathname):
     if pathname == '/':
         return [html.Div([dcc.Markdown('''
@@ -137,7 +135,7 @@ def render_page_content(pathname):
     elif pathname == '/Analyse':
         return [html.Div([
     
-    ### Graphs of Historical  statistics ###
+    #Graphes recuperes avec les fonctions
     dbc.Row(dbc.Col(html.H3(children='Analyse', style={'text-align':'center', 'font-size':'100px','font-family':'nunito','background-color':'red', 'background-image':'conic-gradient(#f3ec78, #af4261)', 'background-size':'100%','background-repeat':'repeat','-webkit-background-clip':'text','-webkit-text-fill-color':'transparent','-moz-background-clip':'text', '-moz-text-fill-color':'transparent', 'font-weight':'900'}))),
     
     dcc.Graph(
@@ -166,7 +164,7 @@ def render_page_content(pathname):
    )
 ])]
 
- 
+ # Creation de la page profils types
     elif pathname == '/Profiles':
         return [html.Div(children=[
                 html.H1(children='Profils types des participants', style={'text-align':'center', 'font-size':'100px','font-family':'nunito','background-color':'red', 'background-image':'conic-gradient(#f3ec78, #af4261)', 'background-size':'100%','background-repeat':'repeat','-webkit-background-clip':'text','-webkit-text-fill-color':'transparent','-moz-background-clip':'text', '-moz-text-fill-color':'transparent', 'font-weight':'900'}),
@@ -195,6 +193,7 @@ def render_page_content(pathname):
                 ], style={'float':'left','width':'40%'})
                 ], style={'position':'absolute', 'top':'10px','left':'290px', 'width':'90%'})]
 
+    #Page pour envoyer un fichier csv
     elif pathname == '/tester':
         return [html.Div([
     dcc.Upload(
@@ -232,21 +231,23 @@ def render_page_content(pathname):
             ]
         )
 
-
+#focntions pour le fichier
 def parse_contents(contents, filename, date):
     content_type, content_string = contents.split(',')
 
     decoded = base64.b64decode(content_string)
     try:
+        #decodage du fichier
         if 'csv' in filename:
             df = pd.read_csv(
                 io.StringIO(decoded.decode('utf-8')), sep=';', on_bad_lines='skip')
+            
     except Exception as e:
         print(e)
         return html.Div([
             "Une erreur s'est produite."
         ])
-
+    #fonction retourne un data_table avec les donnees du fichier
     return html.Div([
         html.H5(filename),
 
@@ -257,7 +258,7 @@ def parse_contents(contents, filename, date):
 
         html.Hr(),  # horizontal line
 
-        # For debugging, display the raw contents provided by the web browser
+        #Eviter les bugs d'affichages notamment en largeur
         html.Div('Raw Content'),
         html.Pre(contents[0:500] + '...', style={
             'whiteSpace': 'pre-wrap',
@@ -265,6 +266,7 @@ def parse_contents(contents, filename, date):
         })
     ])
 
+#fonciton callback pour déposer le fichier
 @app.callback(Output('output-data-upload', 'children'),
               Input('upload-data', 'contents'),
               State('upload-data', 'filename'),
