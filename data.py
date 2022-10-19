@@ -14,14 +14,14 @@ import plotly.express as px
 
 font_family = 'nunito'
 
-
+#Creation des differents graphes via des fonctions
 
 
 
 
 def activite():
   df = pd.read_csv("train.csv",sep=";")
-  df_activite =df.iloc[:,45:62]# df.iloc[:,40:57]
+  df_activite =df.iloc[:,45:62]
   df_activite['sports'] = (df_activite['sports'] + df_activite['exercise'] + df_activite['hiking'] + df_activite['yoga'])/4
 
   df_activite.drop(columns=['exercise','hiking','yoga'],inplace=True)
@@ -33,14 +33,15 @@ def activite():
   df_activite = pd.DataFrame(df_activite.mean(axis=0)*10).reset_index()
   df_activite.columns = ['activity','mean']
 
+  #Creation du graphique activites
   fig_activites = px.bar(df_activite, x='activity', y='mean', 
                   labels={'activity':'Activités','mean':'Popularité (en %)'}, 
                   color='mean', 
                   color_continuous_scale=['#FEF9E7','#F8C471','#F39C12','#9C640C'])
 
-
+  #Fond transparent
   fig_activites.update_layout({'plot_bgcolor':'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)'},yaxis_range=[0,100])
-
+  #Titre en haut et centre + style
   fig_activites.update_layout(title={'text':'Popularités des activités', 'y':0.92, 'x':0.5, 'xanchor':'center','yanchor':'top'}, title_font_family=font_family, title_font_size=28)
 
   return fig_activites
@@ -49,6 +50,7 @@ def income():
   df = pd.read_csv("train.csv",sep=";")
   income = df[['income','age', 'gender']]
   income.replace({',':''}, regex=True, inplace=True)
+  #Decoupage de l'age en tranches de 5 ans
   income['tranche'] = pd.cut(income['age'], bins=np.arange(15,55,5), labels=['17-20', '20-25', '25-30', '30-35', '35-40', '40-45', '45-50'])
 
   income['gender'] = np.where(income['gender'] == 1, "Homme","Femme")
